@@ -52,4 +52,10 @@ export class AppComponent implements AfterViewInit {
       L.marker([+lat, +lon]).addTo(this.map);
     }
   }
+  async addroutes(){
+    alert("Add")
+  }
+  async viewroutes(){
+    alert("View")
+  }
 }

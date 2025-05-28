@@ -22,7 +22,7 @@
 }
 
 .full-width {
-  width: 250px;
+  width: relative;
 }
 
 .square-button {
