@@ -2,9 +2,14 @@
 
 <div class="overlay">
   <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Ort eingeben</mat-label>
+    <mat-label>Start eingeben</mat-label>
     <input matInput [(ngModel)]="searchTerm" placeholder="z. B. Wien">
   </mat-form-field>
+  <mat-form-field appearance="fill" class="full-width2">
+    <mat-label>Ziel eingeben</mat-label>
+    <input matInput [(ngModel)]="searchTerm" placeholder="z. B. Wien">
+  </mat-form-field>
+
 
   <button mat-raised-button color="primary" class="full-width square-button" (click)="search()">
     Suchen
