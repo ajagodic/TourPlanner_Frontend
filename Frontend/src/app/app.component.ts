@@ -26,7 +26,7 @@ import { TourDetailsDialogComponent } from './tour-details-dialog/tour-details-d
   MatButtonModule,
   MatDialogModule,
   MatSelectModule,
-  TourDetailsDialogComponent, // ⬅ notwendig bei Standalone-Komponenten
+  TourDetailsDialogComponent, 
 ]
 
 })
@@ -42,12 +42,17 @@ export class AppComponent implements AfterViewInit {
   //constructor(private http: HttpClient) {}
   constructor(private http: HttpClient, private dialog: MatDialog) {}
 
-  openTourDetails(tour: any): void {
-  this.dialog.open(TourDetailsDialogComponent, {
+  openTourDetails(tour: any) {
+  const dialogRef = this.dialog.open(TourDetailsDialogComponent, {
     data: tour,
-    width: '400px'
   });
-}
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result?.deleted) {
+      this.loadTours(); // Liste neu laden
+    }
+  });
+  }
 
 
 

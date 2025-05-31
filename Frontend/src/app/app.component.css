@@ -28,14 +28,4 @@
   width: relative;
 }
 .full-width2 {
-  width: relative;
-}
-
-.square-button {
-  border-radius: 0 !important;
-}
-
-html, body {
-  overflow: visible;
-}
-
+  width: relative

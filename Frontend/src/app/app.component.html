@@ -28,8 +28,7 @@
     Route hinzufügen
   </button>
   <button mat-raised-button (click)="loadTours()">Routen anzeigen</button>
-
- <ul *ngIf="tours.length > 0">
+  <ul *ngIf="tours.length > 0">
   <li *ngFor="let tour of tours" (click)="openTourDetails(tour)" style="cursor: pointer;">
     {{ tour.name }}
   </li>
