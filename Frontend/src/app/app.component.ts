@@ -6,6 +6,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { TourDetailsDialogComponent } from './tour-details-dialog/tour-details-dialog.component';
+
+
 
 
 @Component({
@@ -14,14 +18,17 @@ import { MatSelectModule } from '@angular/material/select';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   imports: [
-    CommonModule,
-    FormsModule,
-    HttpClientModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
-  ]
+  CommonModule,
+  FormsModule,
+  HttpClientModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatButtonModule,
+  MatDialogModule,
+  MatSelectModule,
+  TourDetailsDialogComponent, // ⬅ notwendig bei Standalone-Komponenten
+]
+
 })
 export class AppComponent implements AfterViewInit {
   map: any;
@@ -32,7 +39,18 @@ export class AppComponent implements AfterViewInit {
   // ✅ Hier einfügen
   title = '';
 
-  constructor(private http: HttpClient) {}
+  //constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private dialog: MatDialog) {}
+
+  openTourDetails(tour: any): void {
+  this.dialog.open(TourDetailsDialogComponent, {
+    data: tour,
+    width: '400px'
+  });
+}
+
+
+
 
   tours: any[] = [];
 
