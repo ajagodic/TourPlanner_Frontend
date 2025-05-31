@@ -21,13 +21,11 @@
 </mat-form-field>
 </div>
 
+  <div class="button-row">
+  <button mat-raised-button color="primary" (click)="addRoute()">➕ Tour hinzufügen</button>
+  <button mat-raised-button color="accent" (click)="loadTours()">📄 Touren anzeigen</button>
+  </div>
 
-
-
-  <button mat-raised-button (click)="addRoute()">
-    Route hinzufügen
-  </button>
-  <button mat-raised-button (click)="loadTours()">Routen anzeigen</button>
   <ul *ngIf="tours.length > 0">
   <li *ngFor="let tour of tours" (click)="openTourDetails(tour)" style="cursor: pointer;">
     {{ tour.name }}

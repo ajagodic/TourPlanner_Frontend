@@ -9,7 +9,8 @@
   <p><strong>Distanz:</strong> {{ data.distance }} km</p>
 </mat-dialog-content>
 
-<mat-dialog-actions stlye="end">
+<mat-dialog-actions style="end">
   <button mat-flat-button color="primary" mat-dialog-close>Schließen</button>
+  <button mat-flat-button color="accent" (click)="exportAsCSV()">📄 Exportieren</button>
   <button mat-flat-button color="warn" (click)="deleteTour()">🗑️ Löschen</button>
 </mat-dialog-actions>

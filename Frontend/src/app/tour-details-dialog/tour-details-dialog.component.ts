@@ -20,6 +20,20 @@ export class TourDetailsDialogComponent {
     private dialogRef: MatDialogRef<TourDetailsDialogComponent>,
     private http: HttpClient
   ) {}
+exportAsCSV() {
+  const fields = ['name', 'startLocation', 'endLocation', 'transportType', 'estimatedTime', 'distance'];
+  const csvHeader = fields.join(',') + '\n';
+  const csvRow = fields.map(f => `"${(this.data[f] || '').toString().replace(/"/g, '""')}"`).join(',') + '\n';
+  const csv = csvHeader + csvRow;
+
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `tour-${this.data.name.replace(/\s+/g, '_')}.csv`;
+  a.click();
+  window.URL.revokeObjectURL(url);
+}
 
   deleteTour() {
     const confirmDelete = confirm(`Möchtest du die Tour "${this.data.name}" wirklich löschen?`);
