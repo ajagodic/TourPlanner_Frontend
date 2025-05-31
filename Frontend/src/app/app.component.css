@@ -6,6 +6,9 @@
   left: 0;
   z-index: 1;
 }
+.cdk-overlay-container {
+  z-index: 2000 !important;
+}
 
 .overlay {
   position: absolute;
@@ -31,3 +34,8 @@
 .square-button {
   border-radius: 0 !important;
 }
+
+html, body {
+  overflow: visible;
+}
+

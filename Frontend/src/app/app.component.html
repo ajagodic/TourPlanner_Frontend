@@ -2,22 +2,36 @@
 
 <div class="overlay">
   <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Start eingeben</mat-label>
-    <input matInput [(ngModel)]="searchTerm" placeholder="z. B. Wien">
-  </mat-form-field>
-  <mat-form-field appearance="fill" class="full-width2">
-    <mat-label>Ziel eingeben</mat-label>
-    <input matInput [(ngModel)]="searchTerm" placeholder="z. B. Wien">
-  </mat-form-field>
+  <mat-label>Start eingeben</mat-label>
+  <input matInput [(ngModel)]="startLocation" placeholder="z. B. Wien">
+</mat-form-field>
+
+<mat-form-field appearance="fill" class="full-width2">
+  <mat-label>Ziel eingeben</mat-label>
+  <input matInput [(ngModel)]="endLocation" placeholder="z. B. Graz">
+</mat-form-field>
+<div style="position: relative; z-index: 9999; background: white;">
+<mat-form-field appearance="fill" class="full-width">
+  <mat-label>Transportmittel auswählen</mat-label>
+  <mat-select [(ngModel)]="transportType">
+    <mat-option value="driving-car">Auto</mat-option>
+    <mat-option value="cycling-regular">Fahrrad</mat-option>
+    <mat-option value="foot-walking">Zu Fuß</mat-option>
+  </mat-select>
+</mat-form-field>
+</div>
 
 
-  <button mat-raised-button color="primary" class="full-width square-button" (click)="search()">
-    Suchen
-  </button>
-  <button mat-raised-button color="primary" class="full-width square-button" (click)="addroutes()">
+
+
+  <button mat-raised-button (click)="addRoute()">
     Route hinzufügen
   </button>
-  <button mat-raised-button color="primary" class="full-width square-button" (click)="viewroutes()">
-    Route ansehen
-  </button>
+  <button mat-raised-button (click)="loadTours()">Routen anzeigen</button>
+
+  <ul *ngIf="tours.length > 0">
+    <li *ngFor="let tour of tours">{{ tour.name }}</li>
+  </ul>
+
+
 </div>
