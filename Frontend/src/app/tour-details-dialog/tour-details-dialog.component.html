@@ -1,3 +1,5 @@
+
+
 <h2 mat-dialog-title>Tour-Details</h2>
 
 <mat-dialog-content style="min-width: 300px; padding-bottom: 1rem;">
@@ -7,10 +9,50 @@
   <p><strong>Transport:</strong> {{ data.transportType }}</p>
   <p><strong>Dauer:</strong> {{ data.estimatedTime }}</p>
   <p><strong>Distanz:</strong> {{ data.distance }} km</p>
-</mat-dialog-content>
 
-<mat-dialog-actions style="end">
-  <button mat-flat-button color="primary" mat-dialog-close>Schließen</button>
-  <button mat-flat-button color="accent" (click)="exportAsCSV()">📄 Exportieren</button>
-  <button mat-flat-button color="warn" (click)="deleteTour()">🗑️ Löschen</button>
-</mat-dialog-actions>
+  <h3>📝 Neues Tour-Log</h3>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Datum/Zeit</mat-label>
+    <input matInput type="datetime-local" [(ngModel)]="newLog.logTime">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Kommentar</mat-label>
+    <input matInput [(ngModel)]="newLog.comment">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+  <mat-label>Schwierigkeit</mat-label>
+  <mat-select [(ngModel)]="newLog.difficulty">
+    <mat-option value="leicht">Leicht</mat-option>
+    <mat-option value="mittel">Mittel</mat-option>
+    <mat-option value="schwer">Schwer</mat-option>
+  </mat-select>
+  </mat-form-field>
+
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Distanz (km)</mat-label>
+    <input matInput type="number" [(ngModel)]="newLog.totalDistance" min="0">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Gesamtdauer</mat-label>
+    <input matInput type="time" [(ngModel)]="newLog.totalTime">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Bewertung (1–5)</mat-label>
+    <input matInput type="number" min="1" max="5" [(ngModel)]="newLog.rating">
+  </mat-form-field>
+
+<div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem; margin-top: 1rem;">
+  <button mat-flat-button color="primary" mat-dialog-close style="flex: 1 1 auto;">Schließen</button>
+  <button mat-flat-button color="accent" (click)="exportAsCSV()" style="flex: 1 1 auto;">📄 Exportieren</button>
+  <button mat-flat-button color="warn" (click)="deleteTour()" style="flex: 1 1 auto;">🗑️ Löschen</button>
+  <button mat-flat-button color="primary" (click)="createLog()" style="flex: 1 1 auto;">➕ Log hinzufügen</button>
+</div>
+
+
+  </mat-dialog-content>

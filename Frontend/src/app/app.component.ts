@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -32,8 +32,51 @@ import { TourDetailsDialogComponent } from './tour-details-dialog/tour-details-d
 })
 export class AppComponent implements AfterViewInit {
   map: any;
+  tourLogs: any[] = [];
   searchTerm: string = '';
   transportType: string = 'driving-car';
+
+  loadLogs() {
+    this.tourLogs = [];
+
+    this.http.get<any[]>('http://localhost:8080/api/tours').subscribe({
+      next: (tours) => {
+        tours.forEach(tour => {
+          this.http.get<any[]>(`http://localhost:8080/api/tours/${tour.id}/logs`).subscribe({
+            next: (logs) => {
+              logs.forEach(log => {
+                this.tourLogs.push({
+                  ...log,
+                  tourName: tour.name
+                });
+              });
+            },
+            error: err => console.error(`Fehler beim Laden der Logs für Tour ${tour.id}`, err)
+          });
+        });
+      },
+      error: err => console.error('Fehler beim Laden der Touren:', err)
+    });
+  }
+  
+  downloadSummaryReport() {
+  this.http.get('http://localhost:8080/api/files/report/summary', {
+    responseType: 'blob'
+  }).subscribe({
+    next: (blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'tour-summary-report.md';
+      link.click();
+      window.URL.revokeObjectURL(url);
+    },
+    error: (err) => {
+      console.error('Fehler beim Herunterladen des Tour-Reports:', err);
+      alert('❌ Fehler beim Generieren des Tour-Reports.');
+    }
+  });
+}
 
 
   // ✅ Hier einfügen
@@ -112,16 +155,18 @@ addRoute() {
 
 
   async ngAfterViewInit() {
-    if (typeof window !== 'undefined') {
-          const L = await import('leaflet');
-          this.map = L.map('map').setView([48.2082, 16.3738], 13);
-          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
-          }).addTo(this.map);
-      }
-    }
+  if (typeof window !== 'undefined') {
+    const L = await import('leaflet');
+    this.map = L.map('map').setView([48.2082, 16.3738], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(this.map);
+  }
+  this.loadLogs(); // 👈 Wird das wirklich ausgeführt?
+}
 
-  async search() {
+
+  /*async search() {
     if (!this.searchTerm.trim()) return;
     const encoded = encodeURIComponent(this.searchTerm);
     const result: any = await this.http
@@ -137,5 +182,5 @@ addRoute() {
   }
   async viewroutes(){
     alert("View")
-  }
+  }*/
 }

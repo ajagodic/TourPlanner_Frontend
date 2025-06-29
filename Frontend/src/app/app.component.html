@@ -1,36 +1,78 @@
-<div id="map"></div>
+<div class="main-container">
+  <!-- Linke Spalte: Karte + Formular -->
+  <div class="left-column">
+    <div id="map"></div>
 
-<div class="overlay">
-  <mat-form-field appearance="fill" class="full-width">
-  <mat-label>Start eingeben</mat-label>
-  <input matInput [(ngModel)]="startLocation" placeholder="z. B. Wien">
-</mat-form-field>
+    <div class="overlay">
+      <div style="flex: 1; min-width: 300px;">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Start eingeben</mat-label>
+        <input matInput [(ngModel)]="startLocation" placeholder="z. B. Wien">
+      </mat-form-field>
 
-<mat-form-field appearance="fill" class="full-width2">
-  <mat-label>Ziel eingeben</mat-label>
-  <input matInput [(ngModel)]="endLocation" placeholder="z. B. Graz">
-</mat-form-field>
-<div style="position: relative; z-index: 9999; background: white;">
-<mat-form-field appearance="fill" class="full-width">
-  <mat-label>Transportmittel auswählen</mat-label>
-  <mat-select [(ngModel)]="transportType">
-    <mat-option value="driving-car">Auto</mat-option>
-    <mat-option value="cycling-regular">Fahrrad</mat-option>
-    <mat-option value="foot-walking">Zu Fuß</mat-option>
-  </mat-select>
-</mat-form-field>
-</div>
+      <mat-form-field appearance="fill" class="full-width2">
+        <mat-label>Ziel eingeben</mat-label>
+        <input matInput [(ngModel)]="endLocation" placeholder="z. B. Graz">
+      </mat-form-field>
 
-  <div class="button-row">
-  <button mat-raised-button color="primary" (click)="addRoute()">➕ Tour hinzufügen</button>
-  <button mat-raised-button color="accent" (click)="loadTours()">📄 Touren anzeigen</button>
+      <div style="position: relative; z-index: 9999; background: white;">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Transportmittel auswählen</mat-label>
+          <mat-select [(ngModel)]="transportType">
+            <mat-option value="driving-car">Auto</mat-option>
+            <mat-option value="cycling-regular">Fahrrad</mat-option>
+            <mat-option value="foot-walking">Zu Fuß</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="button-row">
+        <button mat-raised-button color="primary" (click)="addRoute()">➕ Tour hinzufügen</button>
+        <button mat-raised-button color="accent" (click)="loadTours()">📄 Touren anzeigen</button>
+      </div>
+      <ul *ngIf="tours.length > 0">
+        <li *ngFor="let tour of tours" (click)="openTourDetails(tour)" style="cursor: pointer;">
+          {{ tour.name }}
+        </li>
+      </ul>
+      </div>
+      
   </div>
-
-  <ul *ngIf="tours.length > 0">
-  <li *ngFor="let tour of tours" (click)="openTourDetails(tour)" style="cursor: pointer;">
-    {{ tour.name }}
+  <div style="
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 300px;
+  background-color: white;
+  padding: 1rem;
+  z-index: 1000;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+">
+  <h3>Tour Logs</h3>
+  <ul *ngIf="tourLogs.length > 0; else noLogs">
+  <li *ngFor="let log of tourLogs">
+    🧭 <strong>{{ log.tourName }}</strong><br>
+    📅 {{ log.logTime }}<br>
+    📝 {{ log.comment }}<br>
+    💪 {{ log.difficulty }} – {{ log.totalDistance }} km, {{ log.totalTime }}, {{ log.rating }}/5
+    <hr>
   </li>
 </ul>
+
+<ng-template #noLogs>
+  <p>Keine Tour-Logs vorhanden.</p>
+</ng-template>
+<button mat-raised-button color="primary"
+        style="margin-top: 1rem; width: 100%;"
+        (click)="downloadSummaryReport()">
+  📊 Tour-Report herunterladen
+</button>
+
+
+</div>
 
 
 
