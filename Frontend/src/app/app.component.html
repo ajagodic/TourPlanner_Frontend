@@ -30,11 +30,18 @@
         <button mat-raised-button color="primary" (click)="addRoute()">➕ Tour hinzufügen</button>
         <button mat-raised-button color="accent" (click)="loadTours()">📄 Touren anzeigen</button>
       </div>
-      <ul *ngIf="tours.length > 0">
-        <li *ngFor="let tour of tours" (click)="openTourDetails(tour)" style="cursor: pointer;">
-          {{ tour.name }}
+      <ul *ngIf="tours.length > 0" style="list-style: none; padding: 0;">
+        <li *ngFor="let tour of tours"
+            (click)="openTourDetails(tour)"
+            style="cursor: pointer; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 8px; padding: 1rem; transition: box-shadow 0.3s;">
+          <h3 style="margin: 0 0 0.5rem 0;">🧭 {{ tour.name }}</h3>
+          <p style="margin: 0.25rem 0;">📍 <strong>{{ tour.startLocation }}</strong> ➝ <strong>{{ tour.endLocation }}</strong></p>
+          <p style="margin: 0.25rem 0;">🚗 Transport: {{ tour.transportType }}</p>
+          <p *ngIf="tour.description" style="margin: 0.25rem 0;">📝 {{ tour.description }}</p>
+          <p style="margin: 0.25rem 0;">⏱️ {{ tour.estimatedTime }} | 📏 {{ tour.distance }} km</p>
         </li>
       </ul>
+
       </div>
       
   </div>
@@ -53,7 +60,8 @@
 ">
   <h3>Tour Logs</h3>
   <ul *ngIf="tourLogs.length > 0; else noLogs">
-  <li *ngFor="let log of tourLogs">
+ <li *ngFor="let log of tourLogs" (click)="openLogDialog(log)" style="cursor: pointer;">
+
     🧭 <strong>{{ log.tourName }}</strong><br>
     📅 {{ log.logTime }}<br>
     📝 {{ log.comment }}<br>
@@ -61,6 +69,7 @@
     <hr>
   </li>
 </ul>
+
 
 <ng-template #noLogs>
   <p>Keine Tour-Logs vorhanden.</p>

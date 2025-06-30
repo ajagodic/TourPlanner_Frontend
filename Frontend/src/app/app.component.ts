@@ -8,6 +8,9 @@ import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TourDetailsDialogComponent } from './tour-details-dialog/tour-details-dialog.component';
+import { TourLogEditComponent } from './tour-log-edit-dialog/tour-log-edit-dialog.component';
+import { MatCardModule } from '@angular/material/card';
+
 
 
 
@@ -27,8 +30,9 @@ import { TourDetailsDialogComponent } from './tour-details-dialog/tour-details-d
   MatDialogModule,
   MatSelectModule,
   TourDetailsDialogComponent, 
+  TourLogEditComponent,
+  MatCardModule,
 ]
-
 })
 export class AppComponent implements AfterViewInit {
   map: any;
@@ -59,6 +63,8 @@ export class AppComponent implements AfterViewInit {
     });
   }
   
+
+
   downloadSummaryReport() {
   this.http.get('http://localhost:8080/api/files/report/summary', {
     responseType: 'blob'
@@ -91,11 +97,13 @@ export class AppComponent implements AfterViewInit {
   });
 
   dialogRef.afterClosed().subscribe(result => {
-    if (result?.deleted) {
-      this.loadTours(); // Liste neu laden
+    if (result?.updated || result?.deleted) {
+      this.loadTours();  // Tourliste neu laden
+      this.loadLogs();   // Logs neu laden ✅
     }
   });
-  }
+}
+
 
 
 
@@ -164,6 +172,20 @@ addRoute() {
   }
   this.loadLogs(); // 👈 Wird das wirklich ausgeführt?
 }
+    openLogDialog(log: any) {
+  const dialogRef = this.dialog.open(TourLogEditComponent, {
+    data: log
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result?.updated || result?.deleted || result?.created) {
+      console.log('Log erstellt, aktualisiert oder gelöscht – Logs werden neu geladen');
+      this.loadLogs();
+    }
+  });
+}
+
+
 
 importTourReports(event: Event): void {
   const input = event.target as HTMLInputElement;

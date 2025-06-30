@@ -27,10 +27,12 @@ import { MatSelectModule } from '@angular/material/select';
 })
 export class TourDetailsDialogComponent {
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<TourDetailsDialogComponent>,
-    private http: HttpClient
-  ) {}
+  @Inject(MAT_DIALOG_DATA) public data: any,
+  private http: HttpClient,
+  private dialogRef: MatDialogRef<TourDetailsDialogComponent>
+) {}
+tour: any;
+
 exportAsCSV() {
   if (!this.data?.id) {
     alert("❌ Keine Tour-ID vorhanden.");
@@ -55,7 +57,6 @@ exportAsCSV() {
   });
 }
 
-
 deleteTour() {
     const confirmDelete = confirm(`Möchtest du die Tour "${this.data.name}" wirklich löschen?`);
     if (!confirmDelete) return;
@@ -75,7 +76,8 @@ tourLogs: any[] = [];
 
 ngOnInit() {
   this.loadLogs();
-  this.editedTour = { ...this.data }; // Kopie der Tour zum Bearbeiten
+  this.editedTour = { ...this.data };
+  this.tour = this.data; // Kopie der Tour zum Bearbeiten
 }
 
 editMode = false;
@@ -177,9 +179,4 @@ createLog() {
     }
   });
 }
-
-
-
-
-
 }

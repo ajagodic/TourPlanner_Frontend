@@ -53,7 +53,9 @@
   <button mat-flat-button color="warn" (click)="deleteTour()" style="flex: 1 1 auto;">🗑️ Löschen</button>
   <button mat-flat-button color="primary" (click)="createLog()" style="flex: 1 1 auto;">➕ Log hinzufügen</button>
   <div *ngIf="!editMode">
-  <button mat-flat-button color="accent" (click)="enableEdit()">✏️ Bearbeiten</button>
+  <button mat-flat-button color="accent" style="width: fill;" (click)="enableEdit()">✏️ Bearbeiten</button>
+  
+
 </div>
 
 <div *ngIf="editMode">

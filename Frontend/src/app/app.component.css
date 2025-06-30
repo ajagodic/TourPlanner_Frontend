@@ -86,3 +86,6 @@ html, body {
   overflow-y: auto;
   max-height: calc(100vh - 2rem);
 }
+li:hover {
+  background-color: #f0f0f0;
+}

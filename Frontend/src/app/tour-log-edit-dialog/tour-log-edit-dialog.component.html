@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>Log bearbeiten</h2>
+
+<mat-dialog-content style="min-width: 300px;">
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Kommentar</mat-label>
+    <input matInput [(ngModel)]="log.comment">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Distanz (km)</mat-label>
+    <input matInput type="number" [(ngModel)]="log.totalDistance">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Gesamtdauer</mat-label>
+    <input matInput type="time" [(ngModel)]="log.totalTime">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Bewertung (1–5)</mat-label>
+    <input matInput type="number" min="1" max="5" [(ngModel)]="log.rating">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Schwierigkeit</mat-label>
+    <mat-select [(ngModel)]="log.difficulty">
+      <mat-option value="1">Leicht</mat-option>
+      <mat-option value="2">Mittel</mat-option>
+      <mat-option value="3">Schwer</mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Abbrechen</button>
+  <button mat-button color="primary" (click)="updateLog()">💾 Speichern</button>
+  <button mat-button color="primary" (click)="deleteLog()"> Löschen</button>
+</mat-dialog-actions>
