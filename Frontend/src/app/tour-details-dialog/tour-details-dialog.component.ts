@@ -75,7 +75,30 @@ tourLogs: any[] = [];
 
 ngOnInit() {
   this.loadLogs();
+  this.editedTour = { ...this.data }; // Kopie der Tour zum Bearbeiten
 }
+
+editMode = false;
+editedTour: any = {};
+
+enableEdit() {
+  this.editMode = true;
+  this.editedTour = { ...this.data };
+}
+
+saveChanges() {
+  this.http.put(`http://localhost:8080/api/tours/${this.data.id}`, this.editedTour).subscribe({
+    next: () => {
+      alert('✅ Tour aktualisiert.');
+      this.editMode = false;
+      Object.assign(this.data, this.editedTour); // Änderungen in original übernehmen
+    },
+    error: () => {
+      alert('❌ Fehler beim Speichern der Änderungen.');
+    }
+  });
+}
+
 
 loadLogs() {
   this.http.get<any[]>(`http://localhost:8080/api/tours/${this.data.id}/logs`)

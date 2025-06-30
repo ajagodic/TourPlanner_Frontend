@@ -165,22 +165,26 @@ addRoute() {
   this.loadLogs(); // 👈 Wird das wirklich ausgeführt?
 }
 
+importTourReports(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  if (!input.files?.length) return;
 
-  /*async search() {
-    if (!this.searchTerm.trim()) return;
-    const encoded = encodeURIComponent(this.searchTerm);
-    const result: any = await this.http
-      .get(`https://nominatim.openstreetmap.org/search?q=${encoded}&format=json&limit=1`)
-      .toPromise();
+  const file = input.files[0];
+  const reader = new FileReader();
 
-    if (result.length) {
-      const { lat, lon } = result[0];
-      this.map.setView([+lat, +lon], 14);
-      const L = await import('leaflet');
-      L.marker([+lat, +lon]).addTo(this.map);
-    }
-  }
-  async viewroutes(){
-    alert("View")
-  }*/
+  reader.onload = () => {
+    const fileData = reader.result;
+    this.http.post('http://localhost:8080/api/files/import', fileData, {
+      headers: { 'Content-Type': 'application/json' }
+    }).subscribe({
+      next: () => alert('✅ Import erfolgreich!'),
+      error: (err) => {
+        console.error('❌ Fehler beim Import:', err);
+        alert('Fehler beim Importieren der TourReports.');
+      }
+    });
+  };
+
+  reader.readAsText(file);
+}
 }

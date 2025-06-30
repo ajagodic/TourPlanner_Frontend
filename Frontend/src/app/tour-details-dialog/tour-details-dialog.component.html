@@ -52,6 +52,47 @@
   <button mat-flat-button color="accent" (click)="exportAsCSV()" style="flex: 1 1 auto;">📄 Exportieren</button>
   <button mat-flat-button color="warn" (click)="deleteTour()" style="flex: 1 1 auto;">🗑️ Löschen</button>
   <button mat-flat-button color="primary" (click)="createLog()" style="flex: 1 1 auto;">➕ Log hinzufügen</button>
+  <div *ngIf="!editMode">
+  <button mat-flat-button color="accent" (click)="enableEdit()">✏️ Bearbeiten</button>
+</div>
+
+<div *ngIf="editMode">
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="editedTour.name" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Beschreibung</mat-label>
+    <input matInput [(ngModel)]="editedTour.description" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Start</mat-label>
+    <input matInput [(ngModel)]="editedTour.startLocation" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Ziel</mat-label>
+    <input matInput [(ngModel)]="editedTour.endLocation" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+  <mat-label>Transportmittel</mat-label>
+  <mat-select [(ngModel)]="editedTour.transportType">
+    <mat-option value="driving-car">Auto</mat-option>
+    <mat-option value="cycling-regular">Fahrrad</mat-option>
+    <mat-option value="foot-walking">Zu Fuß</mat-option>
+  </mat-select>
+</mat-form-field>
+
+
+  <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+    <button mat-flat-button color="primary" (click)="saveChanges()">💾 Speichern</button>
+    <button mat-stroked-button color="warn" (click)="editMode = false">✖️ Abbrechen</button>
+  </div>
+</div>
+
 </div>
 
 

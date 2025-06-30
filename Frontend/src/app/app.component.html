@@ -70,10 +70,7 @@
         (click)="downloadSummaryReport()">
   📊 Tour-Report herunterladen
 </button>
-
-
+<button mat-raised-button color="primary" style="margin-top: 1rem; width: 100%;" (click)="fileInput.click()">📊 Tour-Report importieren</button>
+<input type="file" #fileInput style="display: none" (change)="importTourReports($event)" accept="application/json" />
 </div>
-
-
-
 </div>
